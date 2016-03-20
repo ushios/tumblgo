@@ -1,9 +1,6 @@
 package tumblgo
 
-import (
-	"fmt"
-	"testing"
-)
+import "testing"
 
 const (
 	TestBlogIdentifier string = "scipsy"
@@ -12,7 +9,7 @@ const (
 
 func TestClient(t *testing.T) {
 	test := func(bi string, ak string) {
-		c := NewClient(TestBlogIdentifier, ak)
+		c := NewClient(ak)
 
 		if c == nil {
 			t.Errorf("Client is null.")
@@ -24,14 +21,16 @@ func TestClient(t *testing.T) {
 
 func TestBlogInfo(t *testing.T) {
 	test := func(bi string, ak string) {
-		c := NewClient(TestBlogIdentifier, TestAPIKey1)
+		c := NewClient(TestAPIKey1)
 
 		bir := BlogInfoResponse{}
-		if err := c.BlogInfo(&bir); err != nil {
+		if err := c.BlogInfo(TestBlogIdentifier, &bir); err != nil {
 			t.Errorf("Blog Info got error: %s", err)
 		}
 
-		fmt.Println(bir.Response.Blog.Title)
+		if bir.Meta.Status != 200 {
+			t.Errorf("blog-info status expected(%d) but (%d) ", 200, bir.Meta.Status)
+		}
 	}
 
 	test(TestBlogIdentifier, TestAPIKey1)

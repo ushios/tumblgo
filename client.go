@@ -17,28 +17,26 @@ const (
 
 // A Client for Tumblr
 type Client struct {
-	Client         *http.Client
-	BlogIdentifier string
-	APIKey         string
+	Client *http.Client
+	APIKey string
 }
 
 // NewClient create tumblgo client
 // using tumblgo.Client{..} if you want to options
-func NewClient(bi string, apiKey string) *Client {
+func NewClient(apiKey string) *Client {
 	return &Client{
-		Client:         &http.Client{Timeout: time.Duration(10) * time.Second},
-		BlogIdentifier: bi,
-		APIKey:         apiKey,
+		Client: &http.Client{Timeout: time.Duration(10) * time.Second},
+		APIKey: apiKey,
 	}
 }
 
 // BlogEndpoint attache scheme,host and etc.
-func (c *Client) BlogEndpoint(path string) string {
+func (c *Client) BlogEndpoint(bi string, path string) string {
 	return fmt.Sprintf("%s://%s/%s/blog/%s.tumblr.com/%s",
 		Scheme,
 		Host,
 		Version,
-		c.BlogIdentifier,
+		bi,
 		path,
 	)
 }
@@ -78,9 +76,8 @@ func (c *Client) ReadResponse(req *http.Request, v interface{}) error {
 }
 
 // BlogInfo get blog info.
-func (c *Client) BlogInfo(v *BlogInfoResponse) error {
-	fmt.Println(c.BlogEndpoint("info"))
-	req, err := c.Request("GET", c.BlogEndpoint("info"), nil)
+func (c *Client) BlogInfo(bi string, v *BlogInfoResponse) error {
+	req, err := c.Request("GET", c.BlogEndpoint(bi, "info"), nil)
 	if err != nil {
 		return err
 	}
