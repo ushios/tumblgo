@@ -23,8 +23,8 @@ func TestBlogInfo(t *testing.T) {
 	test := func(bi string, ak string) {
 		c := NewClient(TestAPIKey1)
 
-		bir := BlogInfoResponse{}
-		if err := c.BlogInfo(TestBlogIdentifier, &bir); err != nil {
+		bir, err := c.BlogInfo(TestBlogIdentifier)
+		if err != nil {
 			t.Errorf("Blog Info got error: %s", err)
 		}
 

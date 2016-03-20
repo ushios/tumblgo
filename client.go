@@ -76,15 +76,16 @@ func (c *Client) ReadResponse(req *http.Request, v interface{}) error {
 }
 
 // BlogInfo get blog info.
-func (c *Client) BlogInfo(bi string, v *BlogInfoResponse) error {
+func (c *Client) BlogInfo(bi string) (*BlogInfoResponse, error) {
 	req, err := c.Request("GET", c.BlogEndpoint(bi, "info"), nil)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	if err := c.ReadResponse(req, v); err != nil {
-		return err
+	bir := BlogInfoResponse{}
+	if err := c.ReadResponse(req, &bir); err != nil {
+		return nil, err
 	}
 
-	return nil
+	return &bir, nil
 }
