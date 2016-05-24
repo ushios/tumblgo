@@ -3,8 +3,8 @@ package tumblgo
 import "testing"
 
 const (
-	TestBlogIdentifier string = "scipsy"
-	TestAPIKey1        string = "fuiKNFp9vQFvjLNvx4sUwti4Yb5yGutBN4Xh10LXZhhRKjWlV4"
+	testBlogIdentifier string = "scipsy"
+	testAPIKey1        string = "fuiKNFp9vQFvjLNvx4sUwti4Yb5yGutBN4Xh10LXZhhRKjWlV4"
 )
 
 func TestClient(t *testing.T) {
@@ -16,5 +16,5 @@ func TestClient(t *testing.T) {
 		}
 	}
 
-	test(TestBlogIdentifier, TestAPIKey1)
+	test(testBlogIdentifier, testAPIKey1)
 }

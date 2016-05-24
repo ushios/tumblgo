@@ -4,9 +4,9 @@ import "testing"
 
 func TestBlogAvatar(t *testing.T) {
 	// test := func(bi string, ak string) {
-	// 	c := NewClient(TestAPIKey1)
+	// 	c := NewClient(testAPIKey1)
 	//
-	// 	resp, err := c.BlogAvatar(TestBlogIdentifier, AvatarSize512)
+	// 	resp, err := c.BlogAvatar(testBlogIdentifier, AvatarSize512)
 	// 	if err != nil {
 	// 		t.Errorf("BlogAvatar got error: %s", err)
 	// 	}
@@ -16,5 +16,5 @@ func TestBlogAvatar(t *testing.T) {
 	// 	}
 	// }
 	//
-	// test(TestBlogIdentifier, TestAPIKey1)
+	// test(testBlogIdentifier, testAPIKey1)
 }
