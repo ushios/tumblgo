@@ -20,7 +20,7 @@ type BlogLikes struct {
 	LikedCount int `json:"liked_count"`
 }
 
-// BlogLikes .
+// BlogLikes Retrieve Blog's Likes
 func (c *Client) BlogLikes(bi string, param BlogLikesRequest) (*BlogLikesResponse, error) {
 	req, err := c.Request("GET", c.BlogEndpoint(bi, "likes"), nil)
 	if err != nil {

@@ -36,6 +36,12 @@ type BlogPostsRequest struct {
 	Filter     null.String `json:"filter"`
 }
 
+// BlogPostsResponse .
+type BlogPostsResponse struct {
+	Meta     Meta      `json:"meta"`
+	Response BlogPosts `json:"response"`
+}
+
 // BlogPosts .
 type BlogPosts struct {
 	Blog  Blog   `json:"blog"`
@@ -161,4 +167,19 @@ type AnswerPost struct {
 	AskingURL  string `json:"asking_url"`
 	Question   string `json:"question"`
 	Answer     string `json:"answer"`
+}
+
+// BlogPosts Retrieve Published Posts
+func (c *Client) BlogPosts(bi string, param BlogPostsRequest) (*BlogPostsResponse, error) {
+	req, err := c.Request("GET", c.BlogEndpoint(bi, "posts"), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	resp := BlogPostsResponse{}
+	if err := c.ReadResponse(req, &resp); err != nil {
+		return nil, err
+	}
+
+	return &resp, nil
 }

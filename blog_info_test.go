@@ -4,15 +4,15 @@ import "testing"
 
 func TestBlogInfo(t *testing.T) {
 	test := func(bi string, ak string, name string) {
-		c := NewClient(testAPIKey1)
+		c := NewClient(ak)
 
-		res, err := c.BlogInfo(testBlogIdentifier)
+		res, err := c.BlogInfo(bi)
 		if err != nil {
-			t.Errorf("BlogInfo got error: %s", err)
+			t.Fatalf("BlogInfo got error: %s", err)
 		}
 
 		if res.Meta.Status != 200 {
-			t.Errorf("blog-info status expected(%d) but (%d) ", 200, res.Meta.Status)
+			t.Fatalf("blog-info status expected(%d) but (%d) ", 200, res.Meta.Status)
 		}
 
 		if res.Response.Blog.Name != name {
@@ -20,5 +20,5 @@ func TestBlogInfo(t *testing.T) {
 		}
 	}
 
-	test(testBlogIdentifier, testAPIKey1, "scipsy")
+	test("scipsy", testAPIKey1, "scipsy")
 }
