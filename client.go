@@ -9,9 +9,13 @@ import (
 )
 
 const (
-	Scheme         string = "https"
-	Host           string = "api.tumblr.com"
-	Version        string = "v2"
+	// Scheme http or https.
+	Scheme string = "https"
+	// Host tumblr api host.
+	Host string = "api.tumblr.com"
+	// Version api version.
+	Version string = "v2"
+	// TumblgoVersion this version.
 	TumblgoVersion string = " 0.1"
 )
 

@@ -15,14 +15,23 @@ type BlogAvatar struct {
 type AvatarSize string
 
 const (
-	AvatarSize16  AvatarSize = "16"
-	AvatarSize24  AvatarSize = "24"
-	AvatarSize30  AvatarSize = "30"
-	AvatarSize40  AvatarSize = "40"
-	AvatarSize48  AvatarSize = "48"
-	AvatarSize64  AvatarSize = "64"
-	AvatarSize96  AvatarSize = "96"
+	// AvatarSize16 .
+	AvatarSize16 AvatarSize = "16"
+	// AvatarSize24 .
+	AvatarSize24 AvatarSize = "24"
+	// AvatarSize30 .
+	AvatarSize30 AvatarSize = "30"
+	// AvatarSize40 .
+	AvatarSize40 AvatarSize = "40"
+	// AvatarSize48 .
+	AvatarSize48 AvatarSize = "48"
+	// AvatarSize64 .
+	AvatarSize64 AvatarSize = "64"
+	// AvatarSize96 .
+	AvatarSize96 AvatarSize = "96"
+	// AvatarSize128 .
 	AvatarSize128 AvatarSize = "128"
+	// AvatarSize512 .
 	AvatarSize512 AvatarSize = "512"
 )
 

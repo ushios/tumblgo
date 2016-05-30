@@ -14,12 +14,16 @@ type BlogInfo struct {
 // Blog .
 type Blog struct {
 	Title                string `json:"title"`
+	TotalPosts           int    `json:"total_posts"`
 	Posts                int    `json:"posts"`
 	Name                 string `json:"name"`
 	Updated              int    `json:"updated"`
 	Description          string `json:"description"`
+	IsNsfw               bool   `json:"is_nsfw"`
 	Ask                  bool   `json:"ask"`
+	AskPageTitle         string `json:"ask_page_title"`
 	AskAnon              bool   `json:"ask_anon"`
+	ShareLikes           bool   `json:"share_likes"`
 	Likes                int    `json:"likes"`
 	IsBlockedFromPrimary bool   `json:"is_blocked_from_primary"`
 }
