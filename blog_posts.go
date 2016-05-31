@@ -1,13 +1,19 @@
 package tumblgo
 
-import "github.com/guregu/null"
+import (
+	"fmt"
+
+	"github.com/guregu/null"
+)
 
 // PostType .
 type PostType string
 
 const (
+	// PostTypeUnknown .
+	PostTypeUnknown PostType = "unknown"
 	// PostTypeText .
-	PostTypeText PostType = "text"
+	PostTypeText = "text"
 	// PostTypeQuote .
 	PostTypeQuote = "quote"
 	// PostTypeLink .
@@ -49,7 +55,18 @@ type BlogPosts struct {
 }
 
 // Post .
-type Post interface {
+type Post struct {
+	Raw interface{}
+}
+
+// PostType get post type.
+func (p Post) PostType() PostType {
+	switch p.Raw.(type) {
+	default:
+		fmt.Println(p.Raw)
+	}
+
+	return PostTypeUnknown
 }
 
 // BasePost .
