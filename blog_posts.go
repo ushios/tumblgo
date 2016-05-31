@@ -1,6 +1,7 @@
 package tumblgo
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/guregu/null"
@@ -57,6 +58,14 @@ type BlogPosts struct {
 // Post .
 type Post struct {
 	Raw interface{}
+}
+
+// UnmarshalJSON get data from json!
+func (p *Post) UnmarshalJSON(data []byte) error {
+	if err := json.Unmarshal(data, &(p.Raw)); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PostType get post type.
