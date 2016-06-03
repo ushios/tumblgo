@@ -1,9 +1,6 @@
 package tumblgo
 
-import (
-	"fmt"
-	"testing"
-)
+import "testing"
 
 func TestBlogPosts(t *testing.T) {
 	test := func(bi string, ak string) {
@@ -26,7 +23,7 @@ func TestBlogPosts(t *testing.T) {
 }
 
 func TestPostType(t *testing.T) {
-	test := func(bi string, ak string) {
+	test := func(bi string, ak string, ps []PostType) {
 		c := NewClient(ak)
 
 		param := BlogPostsRequest{}
@@ -39,8 +36,15 @@ func TestPostType(t *testing.T) {
 			t.Fatalf("blog-posts status expected(%d) but (%d)", 200, res.Meta.Status)
 		}
 
-		fmt.Println(res.Response.Posts[0].PostType())
+		for i, postType := range ps {
+			if res.Response.Posts[i].PostType() != postType {
+				t.Errorf("PostType Expected (%s) but (%s)", postType, res.Response.Posts[i].PostType())
+			}
+
+		}
 	}
 
-	test("scipsy", testAPIKey1)
+	test("scipsy", testAPIKey1, []PostType{
+		PostTypeAnswer,
+	})
 }

@@ -3,6 +3,7 @@ package tumblgo
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
 
 	"github.com/guregu/null"
 )
@@ -29,6 +30,11 @@ const (
 	PostTypePhoto = "photo"
 	// PostTypeChat .
 	PostTypeChat = "chat"
+)
+
+const (
+	// TypeFieldName TumblrAPI's spec.
+	TypeFieldName = "type"
 )
 
 // BlogPostsRequest .
@@ -71,8 +77,17 @@ func (p *Post) UnmarshalJSON(data []byte) error {
 // PostType get post type.
 func (p Post) PostType() PostType {
 	switch p.Raw.(type) {
-	default:
-		fmt.Println(p.Raw)
+	case map[string]interface{}:
+		vo := reflect.ValueOf(p.Raw)
+		if vo.IsValid() {
+			keys := vo.MapKeys()
+			for _, key := range keys {
+				if key.String() == TypeFieldName {
+					typeName := fmt.Sprintf("%s", vo.MapIndex(key))
+					return PostType(typeName)
+				}
+			}
+		}
 	}
 
 	return PostTypeUnknown
