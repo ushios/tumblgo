@@ -36,11 +36,26 @@ func TestPostType(t *testing.T) {
 			t.Fatalf("blog-posts status expected(%d) but (%d)", 200, res.Meta.Status)
 		}
 
+		// Check Type.
 		for i, postType := range ps {
-			if res.Response.Posts[i].PostType() != postType {
-				t.Errorf("PostType Expected (%s) but (%s)", postType, res.Response.Posts[i].PostType())
+			if res.Response.Posts[i].Type() != postType {
+				t.Errorf("Type Expected (%s) but (%s)", postType, res.Response.Posts[i].Type())
 			}
+		}
 
+		// Check post objects.
+		for _, post := range res.Response.Posts {
+			switch post.Type() {
+			case PostTypeText:
+				tp, err := post.TextPost()
+				if err != nil {
+					t.Errorf("TextPost failed.")
+				}
+
+				if tp.Body == "" {
+					t.Errorf("The text post have no body.")
+				}
+			}
 		}
 	}
 

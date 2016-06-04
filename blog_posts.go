@@ -2,6 +2,7 @@ package tumblgo
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"reflect"
 
@@ -37,6 +38,11 @@ const (
 	TypeFieldName = "type"
 )
 
+var (
+	// ErrPostTypeNotMatched the post type is not mathced.
+	ErrPostTypeNotMatched = errors.New("post type not matched")
+)
+
 // BlogPostsRequest .
 type BlogPostsRequest struct {
 	Type       *PostType   `json:"type"`
@@ -63,19 +69,27 @@ type BlogPosts struct {
 
 // Post .
 type Post struct {
-	Raw interface{}
+	jsonData []byte
+	Raw      interface{}
+}
+
+// MarshalJSON encode to json.
+func (p *Post) MarshalJSON() ([]byte, error) {
+	return json.Marshal(p)
 }
 
 // UnmarshalJSON get data from json!
 func (p *Post) UnmarshalJSON(data []byte) error {
+	p.jsonData = data
+
 	if err := json.Unmarshal(data, &(p.Raw)); err != nil {
 		return err
 	}
 	return nil
 }
 
-// PostType get post type.
-func (p Post) PostType() PostType {
+// Type get post type.
+func (p Post) Type() PostType {
 	switch p.Raw.(type) {
 	case map[string]interface{}:
 		vo := reflect.ValueOf(p.Raw)
@@ -91,6 +105,28 @@ func (p Post) PostType() PostType {
 	}
 
 	return PostTypeUnknown
+}
+
+// postModel restruct Post to XxxxPost.
+func (p Post) postModel(postType PostType, v interface{}) error {
+	if p.Type() != postType {
+		return ErrPostTypeNotMatched
+	}
+
+	if err := json.Unmarshal(p.jsonData, v); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// TextPost restruct to TextPost.
+func (p Post) TextPost() (*TextPost, error) {
+	tp := TextPost{}
+	if err := p.postModel(PostTypeText, &tp); err != nil {
+		return &tp, err
+	}
+	return &tp, nil
 }
 
 // BasePost .
