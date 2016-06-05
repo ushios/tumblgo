@@ -129,121 +129,67 @@ func (p Post) TextPost() (*TextPost, error) {
 	return &tp, nil
 }
 
-// BasePost .
-type BasePost struct {
-	BlogName    string   `json:"blog_name"`
-	ID          int64    `json:"id"`
-	PostURL     string   `json:"post_url"`
-	Type        PostType `json:"type"`
-	Timestump   int      `json:"timestump"`
-	Date        string   `json:"date"`
-	Format      string   `json:"format"`
-	ReblogKey   string   `json:"reblog_key"`
-	Tags        []string `json:"tags"`
-	Bookmarklet bool     `json:"bookmarklet"`
-	Mobile      bool     `json:"mobile"`
-	SourceURL   string   `json:"source_url"`
-	SourceTitle string   `json:"source_title"`
-	Liked       bool     `json:"liked"`
-	State       string   `json:"state"`
-	TotalPosts  int      `json:"total_posts"`
+// PhotoPost restruct to PhotoPost.
+func (p Post) PhotoPost() (*PhotoPost, error) {
+	pp := PhotoPost{}
+	if err := p.postModel(PostTypePhoto, &pp); err != nil {
+		return &pp, err
+	}
+	return &pp, nil
 }
 
-// TextPost text post.
-type TextPost struct {
-	BasePost
-	Title string `json:"title"`
-	Body  string `json:"body"`
+// QuotePost restruct to QuotePost.
+func (p Post) QuotePost() (*QuotePost, error) {
+	qp := QuotePost{}
+	if err := p.postModel(PostTypeQuote, &qp); err != nil {
+		return &qp, err
+	}
+	return &qp, nil
 }
 
-// PhotoSize .
-type PhotoSize struct {
-	Width  int    `json:"width"`
-	Height int    `json:"height"`
-	URL    string `json:"url"`
+// LinkPost restruct to LinkPost.
+func (p Post) LinkPost() (*LinkPost, error) {
+	lp := LinkPost{}
+	if err := p.postModel(PostTypeLink, &lp); err != nil {
+		return &lp, err
+	}
+	return &lp, nil
 }
 
-// Photo .
-type Photo struct {
-	Caption      string      `json:"caption"`
-	AltSizes     []PhotoSize `json:"alt_size"`
-	OriginalSize PhotoSize   `json:"original_size"`
+// ChatPost restruct to ChatPost.
+func (p Post) ChatPost() (*ChatPost, error) {
+	cp := ChatPost{}
+	if err := p.postModel(PostTypeChat, &cp); err != nil {
+		return &cp, err
+	}
+	return &cp, nil
 }
 
-// PhotoPost .
-type PhotoPost struct {
-	BasePost
-	Photos []Photo `json:"photos"`
+// AudioPost restruct to AudioPost.
+func (p Post) AudioPost() (*AudioPost, error) {
+	ap := AudioPost{}
+	if err := p.postModel(PostTypeAudio, &ap); err != nil {
+		return &ap, err
+	}
+	return &ap, nil
 }
 
-// QuotePost .
-type QuotePost struct {
-	BasePost
-	Text   string `json:"text"`
-	Source string `json:"source"`
+// VideoPost restruct to VideoPost.
+func (p Post) VideoPost() (*VideoPost, error) {
+	vp := VideoPost{}
+	if err := p.postModel(PostTypeVideo, &vp); err != nil {
+		return &vp, err
+	}
+	return &vp, nil
 }
 
-// LinkPost .
-type LinkPost struct {
-	BasePost
-	Title       string  `json:"title"`
-	URL         string  `json:"url"`
-	Author      string  `json:"author"`
-	Excerpt     string  `json:"excerpt"`
-	Publisher   string  `json:"publisher"`
-	Photos      []Photo `json:"photos"`
-	Description string  `json:"description"`
-}
-
-// Dialogue .
-type Dialogue struct {
-	Name   string `json:"name"`
-	Label  string `json:"label"`
-	Phrase string `json:"phrase"`
-}
-
-// ChatPost .
-type ChatPost struct {
-	BasePost
-	Title     string     `json:"title"`
-	Post      string     `json:"post"`
-	Dialogues []Dialogue `json:"dialogue"`
-}
-
-// AudioPost .
-type AudioPost struct {
-	BasePost
-	Caption     string `json:"caption"`
-	Player      string `json:"player"`
-	Plays       int64  `json:"plays"`
-	AlbumArt    string `json:"almub_art"`
-	Artist      string `json:"artist"`
-	Album       string `json:"album"`
-	TrackName   string `json:"track_name"`
-	TrackNumber int    `json:"track_number"`
-	Year        int    `json:"year"`
-}
-
-// Player .
-type Player struct {
-	Width     int    `json:"width"`
-	EmbedCode string `json:"embed_code"`
-}
-
-// VideoPost .
-type VideoPost struct {
-	BasePost
-	Caption string   `json:"caption"`
-	Players []Player `json:"player"`
-}
-
-// AnswerPost .
-type AnswerPost struct {
-	BasePost
-	AskingName string `json:"asking_name"`
-	AskingURL  string `json:"asking_url"`
-	Question   string `json:"question"`
-	Answer     string `json:"answer"`
+// AnswerPost restruct to AnswerPost.
+func (p Post) AnswerPost() (*AnswerPost, error) {
+	ap := AnswerPost{}
+	if err := p.postModel(PostTypeAnswer, &ap); err != nil {
+		return &ap, err
+	}
+	return &ap, nil
 }
 
 // BlogPosts Retrieve Published Posts

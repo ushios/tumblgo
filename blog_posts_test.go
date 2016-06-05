@@ -55,6 +55,15 @@ func TestPostType(t *testing.T) {
 				if tp.Body == "" {
 					t.Errorf("The text post have no body.")
 				}
+			case PostTypePhoto:
+				pp, err := post.PhotoPost()
+				if err != nil {
+					t.Errorf("PhotoPost failed.")
+				}
+
+				if pp.Photos[0].OriginalSize.URL == "" {
+					t.Errorf("The PhotoPost have no image url.")
+				}
 			}
 		}
 	}
